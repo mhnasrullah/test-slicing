@@ -1,26 +1,32 @@
-import { FC } from "react";
-import Card from "../Card";
+import { FC, useMemo } from "react";
+import Card from "../nano/Card";
 import Text from "../nano/Text";
+import { fetchSWR } from "@/lib/swr";
 
 const useStatCardList = () => {
-  const data = [
-    {
-      label: "Unresolved",
-      value: 60,
-    },
-    {
-      label: "Overdue",
-      value: 16,
-    },
-    {
-      label: "Open",
-      value: 43,
-    },
-    {
-      label: "On hold",
-      value: 64,
-    },
-  ];
+  const { data: dataStat } = fetchSWR("/api/stat-top");
+
+  const data = useMemo(
+    () => [
+      {
+        label: "Unresolved",
+        value: dataStat?.data?.unresolved ?? 0,
+      },
+      {
+        label: "Overdue",
+        value: dataStat?.data?.overdue ?? 0,
+      },
+      {
+        label: "Open",
+        value: dataStat?.data?.open ?? 0,
+      },
+      {
+        label: "On hold",
+        value: dataStat?.data?.on_hold ?? 0,
+      },
+    ],
+    [dataStat]
+  );
 
   return { data };
 };

@@ -1,4 +1,4 @@
-import Card from "@/components/Card";
+import Card from "@/components/nano/Card";
 import FormLogin from "@/components/eco/FormLogin";
 import BaseLayout from "@/components/layouts/Base";
 import Text from "@/components/nano/Text";

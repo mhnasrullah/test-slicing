@@ -1,37 +1,46 @@
-import { FC } from "react";
-import Card from "../Card";
+import { FC, useMemo } from "react";
+import Card from "../nano/Card";
 import Text from "../nano/Text";
 import Chart from "../macro/Chart";
 import clsx from "clsx";
+import { fetchSWR } from "@/lib/swr";
 
 const useStatChart = () => {
-  const data = [
-    {
-      label: "Resolved",
-      value: 449,
-    },
-    {
-      label: "Received",
-      value: 426,
-    },
-    {
-      label: "Average First Response Time",
-      value: "33m",
-    },
-    {
-      label: "Average Response Time",
-      value: "3h 8m",
-    },
-    {
-      label: "Resolution within SLA",
-      value: "94%",
-    },
-  ];
-  return { data };
+  const { data: dataStat } = fetchSWR("/api/stat-chart");
+
+  const data = useMemo(() => {
+    return {
+      chart: dataStat?.data?.chart ?? [],
+      detail: [
+        {
+          label: "Resolved",
+          value: dataStat?.data?.detail?.resolved ?? 0,
+        },
+        {
+          label: "Received",
+          value: dataStat?.data?.detail?.received ?? 0,
+        },
+        {
+          label: "Average First Response Time",
+          value: dataStat?.data?.detail?.avg_st_response_time ?? "-",
+        },
+        {
+          label: "Average Response Time",
+          value: dataStat?.data?.detail?.avg_response_time ?? "-",
+        },
+        {
+          label: "Resolution within SLA",
+          value: dataStat?.data?.detail?.resolution_within_sla ?? "-",
+        },
+      ],
+    };
+  }, [dataStat]);
+
+  return { data: data.detail, chart: data.chart };
 };
 
 const StatChart: FC = () => {
-  const { data } = useStatChart();
+  const { data, chart: chartData } = useStatChart();
   return (
     <Card className="mt-6">
       <div className="lg:flex">
@@ -52,40 +61,7 @@ const StatChart: FC = () => {
               </div>
             </div>
           </div>
-          <Chart
-            data={[
-              {
-                x: "0",
-                last: 35,
-                recent: 15,
-              },
-              {
-                x: "1",
-                last: 20,
-                recent: 20,
-              },
-              {
-                x: "3",
-                last: 35,
-                recent: 50,
-              },
-              {
-                x: "4",
-                last: 25,
-                recent: 30,
-              },
-              {
-                x: "5",
-                last: 50,
-                recent: 60,
-              },
-              {
-                x: "6",
-                last: 45,
-                recent: 50,
-              },
-            ]}
-          />
+          <Chart data={chartData} />
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-1 lg:border-l lg:border-l-l-gray">
           {data.map((item, index) => (
@@ -112,4 +88,4 @@ const StatChart: FC = () => {
   );
 };
 
-export default StatChart
+export default StatChart;

@@ -2,10 +2,12 @@ import {
   IconBook,
   IconGraph,
   IconLamp,
+  IconLogout,
   IconMedal,
   IconSettings,
   IconTicket,
   IconUser,
+  IconUsersGroup,
   IconX,
 } from "@tabler/icons-react";
 import clsx from "clsx";
@@ -16,6 +18,11 @@ import Text from "../nano/Text";
 
 const useSidebar = () => {
   const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.replace("/");
+  };
 
   const menuA = [
     {
@@ -47,7 +54,7 @@ const useSidebar = () => {
     {
       label: "Contacts",
       active: false,
-      icon: <IconLamp color="#7f8188" />,
+      icon: <IconUsersGroup color="#7f8188" />,
       onClick: () => {},
     },
     {
@@ -75,6 +82,12 @@ const useSidebar = () => {
       active: false,
       icon: <IconMedal color="#7f8188" />,
       onClick: () => {},
+    },
+    {
+      label: "Logout",
+      active: false,
+      icon: <IconLogout color="red" />,
+      onClick: handleLogout,
     },
   ];
 
@@ -116,6 +129,7 @@ const Sidebar: FC<{
             })}
             type="button"
             key={index}
+            onClick={item.onClick}
           >
             {item.icon}
             <Text
@@ -137,6 +151,7 @@ const Sidebar: FC<{
             })}
             type="button"
             key={index}
+            onClick={item.onClick}
           >
             {item.icon}
             <Text
