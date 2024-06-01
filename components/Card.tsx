@@ -5,7 +5,7 @@ import { FC } from "react";
 const Card: FC<BaseTypeComponent> = ({ children, className }) => (
   <div
     className={clsx(
-      "rounded-md border border-gray bg-white p-4 w-full",
+      "rounded-md shadow-md bg-white p-6 w-full",
       className
     )}
   >

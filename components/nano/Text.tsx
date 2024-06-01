@@ -7,7 +7,7 @@ interface TextProps extends BaseTypeComponent {
   colors?: "dark" | "gray" | "light";
 }
 
-const Text: FC<TextProps> = ({ className, children, size = "md", colors }) => {
+const Text: FC<TextProps> = ({ className, children, size = "md", colors = "dark" }) => {
   return (
     <p
       className={clsx(

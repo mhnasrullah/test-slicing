@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import FormLogin from "@/components/eco/FormLogin";
 import BaseLayout from "@/components/layouts/Base";
 import Text from "@/components/nano/Text";
 import Image from "next/image";
@@ -8,7 +9,7 @@ export default function Home() {
   return (
     <div className="bg-dark min-h-screen">
       <BaseLayout className="flex justify-center items-center">
-        <Card className="max-w-[500px]">
+        <Card className="max-w-[400px]">
           <Image
             src="/logo.png"
             alt="Sekawan Media"
@@ -27,21 +28,14 @@ export default function Home() {
               Enter your email and password below
             </Text>
           </div>
-          <div>
-            <form>
-              <div className="w-full">
-                <div className="flex ali">
-
-                  <label className="block text-gray">EMAIL</label>
-                  <Link href="/dashboard" className="text-gray text-sm">test</Link>
-                </div>
-                <input
-                  type="email"
-                  placeholder="Email address"
-                  className="outline-none w-full py-2 px-3 placeholder:text-gray rounded-md border border-gray"
-                />
-              </div>
-            </form>
+          <div className="mt-6">
+            <FormLogin />
+            <div className="mt-6 flex gap-2 justify-center">
+              <Text colors="gray">Don&apos;t have an account?</Text>
+              <Link href="/register" className="text-primary text-center">
+                Sign up
+              </Link>
+            </div>
           </div>
         </Card>
       </BaseLayout>
