@@ -17,7 +17,6 @@ const useTask = () => {
 
 const Task: FC = () => {
   const { data } = useTask();
-  console.log(data);
   return (
     <Card>
       <div className="flex justify-between items-end">
@@ -26,9 +25,7 @@ const Task: FC = () => {
           View all
         </button>
       </div>
-      <Text className="text-sm font-medium text-l-gray mt-2 mb-4">
-        Today
-      </Text>
+      <Text className="text-sm font-medium text-l-gray mt-2 mb-4">Today</Text>
 
       <div>
         <div>

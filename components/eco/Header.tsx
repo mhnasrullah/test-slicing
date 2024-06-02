@@ -2,18 +2,22 @@ import { IconBell, IconMenu, IconSearch } from "@tabler/icons-react";
 import { FC } from "react";
 import Text from "../nano/Text";
 import Image from "next/image";
+import { useNavbar } from "@/store";
 
 const Header: FC<{
-  setShowSidebar: (value: boolean) => void;
-}> = ({ setShowSidebar }) => {
+  page?: string;
+}> = ({
+  page = "Overview",
+}) => {
+  const { show } = useNavbar((state) => state);
   return (
     <div className="flex justify-between items-center">
       <div className="flex gap-2">
-        <button onClick={() => setShowSidebar(true)}>
+        <button onClick={show} className="lg:hidden">
           <IconMenu color="#b7b8c6" />
         </button>
         <Text size="lg" className="font-bold" colors="dark">
-          Overview
+          {page}
         </Text>
       </div>
       <div className="flex">
